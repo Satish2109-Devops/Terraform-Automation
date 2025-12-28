@@ -8,42 +8,30 @@ pipeline {
             description: 'Select the action to perform'
         )
     }
-
-    environment {
-        GOGC = "20"
-    }
-
     stages {
-       stage('Checkout') {
-    steps {
-       checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Satish2109-Devops/Terraform-Automation.git']])
-
-    }
-}
+        stage('Checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/ygminds73/Terraform-Automation.git']])
+            }
+        }
     
         stage ("terraform init") {
             steps {
                 sh ("terraform init -reconfigure") 
             }
         }
-        
- 
 
-        stage (" Action") {
+        stage ("Action") {
             steps {
                 script {
                     switch (params.ACTION) {
                         case 'plan':
-                            echo 'Executing Plan with memory optimization...'
-                            sh '''
-                                terraform plan -parallelism=2 -lock=false
-                            '''
+                            echo 'Executing Plan...'
+                            sh "terraform plan"
                             break
                         case 'apply':
-                            echo 'Executing Apply with memory optimization...'
-                            sh '''
-                                terraform apply -parallelism=2 -lock=false --auto-approve
-                            '''
+                            echo 'Executing Apply...'
+                            sh "terraform apply --auto-approve"
                             break
                         default:
                             error 'Unknown action'
