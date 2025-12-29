@@ -69,3 +69,31 @@ tags= {
   }
 }
 
+# Second EC2 Instance
+resource "aws_instance" "mySecondInstance" {
+  ami                    = var.ami_id
+  key_name               = var.key_name
+  instance_type          = var.instance_type
+  vpc_security_group_ids = [aws_security_group.jenkins-sg-2022.id]
+ tags= {
+    Name = "${var.tag_name}-2"
+  }
+  root_block_device {
+    volume_size           = 20
+    volume_type           = "gp3"
+    delete_on_termination = true
+  }
+
+  
+}
+
+# Elastic IP for Second Instance
+resource "aws_eip" "mySecondInstance" {
+  instance = aws_instance.mySecondInstance.id
+
+  tags = {
+    Name = "my_elastic_ip_2"
+  }
+}
+
+
