@@ -4,7 +4,7 @@ pipeline {
     parameters {
          string(
             name: 'BRANCH',
-            defaultValue: 'Main',
+            defaultValue: 'main',
             description: 'Enter Git branch name to perform'
         )
         
