@@ -4,32 +4,41 @@ pipeline {
     parameters {
         choice(
             name: 'ACTION',
-              choices: ['Plan', 'Apply'],
+            choices: ['Plan', 'Apply'],
             description: 'Select the action to perform'
         )
+   
     }
+
+   
+
     stages {
-        stage('Checkout') {
-            steps {
-                  git'https://github.com/Satish2109-Devops/Terraform-Automation.git'
-            }
-        }
+       stage('Checkout') {
+    steps {
+           checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Satish2109-Devops/Terraform-Automation.git']])
+
+
+    }
+}
     
         stage ("terraform init") {
             steps {
                 sh ("terraform init -reconfigure") 
             }
         }
+        
+ 
 
-        stage ("Action") {
+
+        stage (" Action") {
             steps {
                 script {
-                    switch (params.ACTION) {
-                        case 'plan':
+                     switch (params.ACTION) {
+                        case 'Plan':
                             echo 'Executing Plan...'
                             sh "terraform plan"
                             break
-                        case 'apply':
+                        case 'Apply':
                             echo 'Executing Apply...'
                             sh "terraform apply --auto-approve"
                             break
