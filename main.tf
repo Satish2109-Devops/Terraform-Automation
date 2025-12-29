@@ -38,7 +38,7 @@ resource "aws_instance" "myFirstInstance" {
   ami                    = var.ami_id
   key_name               = var.key_name
   instance_type          = var.instance_type
-   subnet_id     = "subnet-0f1421ce1f704eea3"
+   subnet_id     = "subnet-067dec7a9578060fc"  # Replace with your desired subnet ID
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
 
   root_block_device {
@@ -66,7 +66,7 @@ resource "aws_instance" "mySecondInstance" {
   ami                    = var.ami_id
   key_name               = var.key_name
   instance_type          = var.instance_type
-   subnet_id     = "subnet-0f1421ce1f704eea3"
+   subnet_id     = "subnet-067dec7a9578060fc"  # Replace with your desired subnet ID
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
 
   root_block_device {
