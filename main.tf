@@ -38,6 +38,7 @@ resource "aws_instance" "myFirstInstance" {
   ami                    = var.ami_id
   key_name               = var.key_name
   instance_type          = var.instance_type
+  subnet_id = abs(data.aws_subnet_ids.default.ids[0])
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
 
   root_block_device {
@@ -65,6 +66,7 @@ resource "aws_instance" "mySecondInstance" {
   ami                    = var.ami_id
   key_name               = var.key_name
   instance_type          = var.instance_type
+ subnet_id = abs(data.aws_subnet_ids.default.ids[1])
   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
 
   root_block_device {
