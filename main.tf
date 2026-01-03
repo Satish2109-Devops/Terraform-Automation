@@ -67,5 +67,36 @@ resource "aws_eip" "myFirstInstance" {
 tags= {
     Name = "my_elastic_ip"
   }
+
+
+
+  
 }
 
+
+resource "aws_instance" "ec2_server_2" {
+  ami           = var.ami_id
+  key_name      = var.key_name
+  instance_type = var.instance_type
+
+  vpc_security_group_ids = [
+    aws_security_group.jenkins-sg-2022.id
+  ]
+
+  root_block_device {
+    volume_size           = 20
+    volume_type           = "gp3"
+    delete_on_termination = true
+  }
+
+  tags = {
+    Name = "jenkins-server-2"
+  }
+}
+resource "aws_eip" "ec2_server_2_eip" {
+  instance = aws_instance.ec2_server_2.id
+
+  tags = {
+    Name = "ec2_server_2_eip"
+  }
+}
